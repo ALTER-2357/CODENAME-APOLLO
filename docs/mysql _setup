@@ -1,0 +1,12 @@
+CREATE DATABASE unit18;
+
+use unit18;
+
+CREATE TABLE apollo (
+    nhsnumber int PRIMARY KEY,
+    name varchar(100),
+    gender varchar(10),
+    address varchar(100),
+    phonenumber varchar(100),
+    records varchar(1000),
+);

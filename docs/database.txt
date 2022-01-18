@@ -1,0 +1,132 @@
+DROP TABLE IF EXISTS `apollo`;
+
+CREATE TABLE `apollo` (
+  `nhsnumber` mediumint(8) unsigned NOT NULL auto_increment,
+  `name` varchar(255) default NULL,
+  `gender` varchar(255) default NULL,
+  `address` varchar(255) default NULL,
+  `phonenumber` varchar(100) default NULL,
+  `records` varchar(255) default NULL,
+  PRIMARY KEY (`nhsnumber`)
+) AUTO_INCREMENT=1;
+
+INSERT INTO `apollo` (`nhsnumber`,`name`,`gender`,`address`,`phonenumber`,`records`)
+VALUES
+ (1000000,'lewis m','Male','6 brampton gradens',' 07000000',' null'),
+ (1000001,'kyle b','Male','8 glenmore road',' 07000000',' null'),
+ (1000002,'albert l','Male','8 glenmore road',' 07000000',' null'),
+ (1000003,'alexandra b','female','8 glenmore road',' 07000000','null'),
+ (1000004,"Luke Vang","Male","317-7541 At Rd.","(357) 941-5721","record"),
+  (1000005,"Joshua Zimmerman","non-binary","Ap #909-8965 Rutrum Ave","(777) 854-5665","record"),
+  (1000006,"Hashim Cooke","Male","Ap #289-5907 Molestie. Street","(411) 841-0936","record"),
+  (1000007,"Dean Richard","non-binary","P.O. Box 303, 2513 Sed St.","1-781-272-9335","record"),
+  (1000008,"Francis Rice","x","906-4978 Nunc Ave","(678) 423-9502","record"),
+  (1000009,"Jacob Rasmussen","gender-queer","456-1696 Consequat, Ave","(516) 658-8227","record");
+INSERT INTO `apollo` (`nhsnumber`,`name`,`gender`,`address`,`phonenumber`,`records`)
+VALUES
+  (1000010,"Gareth Simpson","Male","Ap #764-4890 Semper St.","(203) 746-8808","record"),
+  (1000011,"Flynn Everett","bigender","P.O. Box 480, 4175 Sit Ave","(832) 725-2316","record"),
+  (1000012,"Chancellor Nichols","Male","P.O. Box 229, 4576 Facilisis Ave","1-658-371-3427","record"),
+  (1000013,"Hilel Lyons","gender-queer","838-7999 Interdum Av.","1-282-891-3884","record"),
+  (1000014,"Allistair Macias","bigender","726-7649 Non, Av.","1-244-525-7517","record"),
+  (1000015,"Charles Mueller","bigender","425-5080 Convallis Road","(256) 211-9905","record"),
+  (1000016,"Fritz Ingram","gender-nonconforming ","216-946 Nunc St.","(780) 215-3041","record"),
+  (1000017,"Malachi Sears","gender-nonconforming ","Ap #401-7194 Sollicitudin Road","1-282-557-5052","record"),
+  (1000018,"Bruce Gilbert","gender-nonconforming ","P.O. Box 649, 3251 Morbi St.","(458) 262-7737","record"),
+  (1000019,"Warren Griffith","gender-queer","380-3147 Mi Street","1-332-862-7241","record");
+INSERT INTO `apollo` (`nhsnumber`,`name`,`gender`,`address`,`phonenumber`,`records`)
+VALUES
+  (1000020,"Orlando Small","Male","Ap #509-4206 Phasellus Rd.","(873) 133-7772","record"),
+  (1000021,"Clinton Spence","gender-nonconforming ","180-8332 Vestibulum Street","1-155-657-1792","record"),
+  (1000022,"Asher Russo","Male","7810 Lacus. Street","(664) 887-2587","record"),
+  (1000023,"Kyle Zamora","Female","433-7560 Libero. Avenue","(233) 825-3128","record"),
+  (1000024,"Cameron Kramer","gender-nonconforming ","826 Purus, Avenue","(765) 283-9304","record"),
+  (1000025,"Brenden Campos","gender-queer","Ap #740-330 Lobortis, Street","1-681-275-8175","record"),
+  (1000026,"Kaseem Pugh","non-binary","8253 Nec Road","1-643-985-4292","record"),
+  (1000027,"Derek Briggs","Female","Ap #170-897 Tellus Road","(432) 617-3062","record"),
+  (1000028,"Zachery Terrell","gender-nonconforming ","Ap #171-9385 Eu, St.","(429) 956-5336","record"),
+  (1000029,"Zephania Workman","Female","Ap #828-2690 Sit St.","(426) 486-8434","record");
+INSERT INTO `apollo` (`nhsnumber`,`name`,`gender`,`address`,`phonenumber`,`records`)
+VALUES
+  (1000030,"Garrett Stevens","non-binary","417 Sit Av.","1-289-476-1773","record"),
+  (1000031,"Harlan Huff","x","213-5762 Nec Rd.","1-762-653-7497","record"),
+  (1000032,"Reed Mclaughlin","gender-queer","Ap #448-7075 Faucibus Ave","(255) 825-3368","record"),
+  (1000033,"Zephania Stephenson","x","268-4023 Ac Rd.","1-311-575-2027","record"),
+  (1000034,"Alden Curry","non-binary","Ap #874-1663 Eu St.","(967) 776-2663","record"),
+  (1000035,"Ishmael Walter","gender-nonconforming ","Ap #498-6165 Urna St.","(882) 621-2835","record"),
+  (1000036,"Louis Dillard","bigender","388-1540 Enim. Avenue","1-494-784-0710","record"),
+  (1000037,"Josiah Ramos","gender-queer","Ap #326-933 Eu, St.","1-255-634-2174","record"),
+  (1000038,"Hakeem Benjamin","non-binary","234-5463 Egestas St.","(364) 541-7934","record"),
+  (1000039,"Mark Ferguson","gender-nonconforming ","P.O. Box 362, 4453 Nullam Av.","1-642-886-2629","record");
+INSERT INTO `apollo` (`nhsnumber`,`name`,`gender`,`address`,`phonenumber`,`records`)
+VALUES
+  (1000040,"Cole Eaton","gender-queer","8670 Ultrices Av.","(474) 974-4437","record"),
+  (1000041,"Alvin Joyner","bigender","580-1628 Egestas Road","(903) 797-5863","record"),
+  (1000042,"Eagan Mayo","Male","512 Turpis. Rd.","(427) 486-9517","record"),
+  (1000043,"Burke Roberson","x","P.O. Box 298, 1528 Curabitur Road","(761) 647-8721","record"),
+  (1000044,"Jason Olson","gender-queer","558-9129 Pellentesque Rd.","(522) 636-2502","record"),
+  (1000045,"Nero Rivas","gender-queer","991-1849 Felis St.","1-853-346-7631","record"),
+  (1000046,"Burton Summers","non-binary","475-8254 Urna St.","(802) 381-0314","record"),
+  (1000047,"Dillon Fletcher","x","P.O. Box 524, 9980 Nisl. Street","(176) 588-4747","record"),
+  (1000048,"Matthew Berry","gender-queer","P.O. Box 947, 5991 Vivamus St.","1-619-816-1460","record"),
+  (1000049,"Timothy Robinson","non-binary","Ap #700-7768 Dis Road","(817) 302-4356","record");
+INSERT INTO `apollo` (`nhsnumber`,`name`,`gender`,`address`,`phonenumber`,`records`)
+VALUES
+  (1000050,"Malik Berg","bigender","Ap #678-7507 Velit. Rd.","(384) 768-4813","record"),
+  (1000051,"Driscoll Best","Female","Ap #287-7335 Vitae St.","(994) 438-3605","record"),
+  (1000052,"Dalton Savage","non-binary","Ap #958-5953 Iaculis Rd.","(645) 313-1324","record"),
+  (1000053,"Robert Pearson","Female","930-4226 Ipsum Street","(136) 713-6554","record"),
+  (1000054,"Tyrone Richardson","bigender","P.O. Box 336, 7179 Vel St.","(841) 831-4337","record"),
+  (1000055,"Elmo Bradford","Female","P.O. Box 980, 9358 Lorem, Road","1-815-380-3342","record"),
+  (1000056,"Honorato Mcmillan","gender-queer","Ap #316-8216 Elementum Rd.","1-545-714-9438","record"),
+  (1000057,"Linus Horne","bigender","7349 Proin Avenue","(407) 235-2816","record"),
+  (1000058,"Cedric Rosa","bigender","Ap #227-6904 Posuere Street","1-386-654-5552","record"),
+  (1000059,"Acton Day","gender-queer","P.O. Box 297, 6172 Parturient Street","(547) 347-8102","record");
+INSERT INTO `apollo` (`nhsnumber`,`name`,`gender`,`address`,`phonenumber`,`records`)
+VALUES
+  (1000060,"Rooney Rhodes","non-binary","Ap #221-8286 Purus, St.","(824) 514-7373","record"),
+  (1000061,"Charles Lara","gender-nonconforming ","Ap #252-753 In St.","1-776-228-5466","record"),
+  (1000062,"Thor Hewitt","Male","Ap #510-6249 Phasellus Ave","1-355-190-2866","record"),
+  (1000063,"Beau Burgess","gender-nonconforming ","Ap #240-5754 Et, Rd.","(472) 933-5727","record"),
+  (1000064,"Berk Mcfarland","x","Ap #599-5929 Vitae Rd.","(888) 641-7088","record"),
+  (1000065,"Merritt Freeman","Female","841-5390 Malesuada Rd.","(438) 254-7732","record"),
+  (1000066,"Barrett Flores","bigender","Ap #386-8575 In, St.","(202) 621-8739","record"),
+  (1000067,"Perry Hodges","gender-queer","Ap #489-8652 Auctor Road","(682) 665-1638","record"),
+  (1000068,"Ciaran Mendoza","Male","239-671 Sollicitudin Rd.","(435) 251-4243","record"),
+  (1000069,"Jason Dorsey","bigender","971-9807 Cubilia Ave","1-842-861-2779","record");
+INSERT INTO `apollo` (`nhsnumber`,`name`,`gender`,`address`,`phonenumber`,`records`)
+VALUES
+  (1000070,"Quinlan Hyde","non-binary","P.O. Box 130, 9766 Varius. Avenue","(537) 205-8676","record"),
+  (1000071,"Amir Cochran","x","131-3550 Cubilia St.","(681) 552-1377","record"),
+  (1000072,"Raymond Wood","Female","2672 Cubilia Rd.","(825) 132-2463","record"),
+  (1000073,"Odysseus Mccray","gender-nonconforming ","Ap #159-9735 Netus Road","1-443-475-5226","record"),
+  (1000074,"Brandon Best","gender-queer","Ap #959-4450 At Ave","(616) 568-1815","record"),
+  (1000075,"Rafael Price","gender-queer","Ap #178-1210 Vitae St.","(222) 140-4620","record"),
+  (1000076,"Ian O'connor","x","471-1735 Nulla. Street","(344) 499-1217","record"),
+  (1000077,"Steel Ewing","gender-nonconforming ","477-1755 Parturient Rd.","(264) 870-8582","record"),
+  (1000078,"Ivor Campbell","x","941-9436 Aliquam Rd.","(186) 228-3467","record"),
+  (1000079,"Ferdinand Parsons","bigender","P.O. Box 635, 6279 Ac Avenue","1-236-224-5526","record");
+INSERT INTO `apollo` (`nhsnumber`,`name`,`gender`,`address`,`phonenumber`,`records`)
+VALUES
+  (1000080,"Adrian Garcia","bigender","884-8044 Semper Avenue","1-776-944-0921","record"),
+  (1000081,"John Wilkinson","Female","Ap #896-164 Quis, Street","1-416-501-2237","record"),
+  (1000082,"William Pennington","non-binary","P.O. Box 430, 1442 Vestibulum Rd.","(450) 631-0220","record"),
+  (1000083,"Cedric Davidson","non-binary","P.O. Box 993, 6725 Aliquet Street","1-331-423-1061","record"),
+  (1000084,"Salvador Joyce","bigender","806-6060 Malesuada Av.","1-408-784-6512","record"),
+  (1000085,"Lewis Browning","x","503-7590 Vivamus Ave","(586) 568-8357","record"),
+  (1000086,"Honorato Pearson","x","534-4543 Tellus. Road","(565) 861-8462","record"),
+  (1000087,"Travis Daniel","gender-queer","519-920 Tellus Avenue","1-339-312-6321","record"),
+  (1000088,"Wyatt Howell","Male","8887 Natoque St.","(560) 284-7737","record"),
+  (1000089,"Lionel Medina","gender-nonconforming ","4885 Mus. Ave","(342) 289-3909","record");
+INSERT INTO `apollo` (`nhsnumber`,`name`,`gender`,`address`,`phonenumber`,`records`)
+VALUES
+  (1000090,"Christian Petersen","gender-nonconforming ","3530 Nam Rd.","1-588-123-7619","record"),
+  (1000091,"Alfonso Armstrong","Female","728-3651 Molestie St.","1-944-645-7536","record"),
+  (1000092,"Keith Rodgers","Female","Ap #815-1782 Tincidunt, Ave","(116) 678-8863","record"),
+  (1000093,"Beck Harding","bigender","Ap #765-2175 Orci St.","1-230-254-8667","record"),
+  (1000094,"Mannix Fleming","gender-queer","Ap #788-5849 Consequat Avenue","1-386-335-7356","record"),
+  (1000095,"Tobias Mccormick","gender-queer","937-2623 Libero. St.","(725) 671-1863","record"),
+  (1000096,"Clarke Davis","bigender","Ap #154-7234 Velit. Rd.","1-446-683-7090","record"),
+  (1000097,"Quinlan Mcclain","non-binary","Ap #220-8580 Donec Ave","(420) 679-1476","record"),
+  (1000098,"Price Walker","non-binary","5991 Ligula Av.","1-736-465-1130","record"),
+  (1000099,"Adrian Cotton","bigender","P.O. Box 605, 6254 Fames St.","1-245-256-2732","record");

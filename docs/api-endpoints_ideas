@@ -1,0 +1,30 @@
+
+make user
+delete user
+
+users cant be deleted but can be marked as lefted the partis
+
+
+
+update user
+
+details
+name, password, email, phonenumber, address
+
+medical records
+read only can only be appened
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
