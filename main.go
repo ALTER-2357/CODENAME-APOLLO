@@ -3,13 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
-	"net/http"
-	"os"
-	"sync"
-
 	"github.com/bdwilliams/go-jsonify/jsonify"
 	"github.com/gorilla/mux"
+	"log"
+	"net/http"
+	"sync"
 
 	"database/sql"
 
@@ -21,7 +19,8 @@ func terrors(errors any, data string, funcname string) {
 	print("error in the function " + funcname + "\n")
 	print(data + "\n")
 	println(errors)
-	os.Exit(10)
+	println("back to main")
+	main()
 }
 
 func dbConn() (db *sql.DB) {
@@ -46,36 +45,37 @@ func main() {
 	go func() {
 
 		router := mux.NewRouter()
+		router.HandleFunc("/bing", bing).Methods("GET")
 
 		//student Details
 		router.HandleFunc("/students/GET/", SDrecords).Methods("GET")
 		router.HandleFunc("/students/UPDATE/", SDrecords).Methods("POST")
 		router.HandleFunc("/students/adduser/", SDadduser).Methods("POST")
-		router.HandleFunc("/students/DELETE/", SDdeleterow).Methods("POST")
+		router.HandleFunc("/students/DELETE/", SDdeleterow).Methods("DELETE")
 
 		//Venue Details
 		router.HandleFunc("/Venue/GET/", VDrecords).Methods("GET")
 		router.HandleFunc("/Venue/UPDATE/", VDrecords).Methods("POST")
 		router.HandleFunc("/Venue/adduser/", VDadduser).Methods("POST")
-		router.HandleFunc("/Venue/DELETE/", VDdeleterow).Methods("POST")
+		router.HandleFunc("/Venue/DELETE/", VDdeleterow).Methods("DELETE")
 
 		///Course Schedule Details
 		router.HandleFunc("/CourseScheduleDetails/GET/", CSDrecords).Methods("GET")
 		router.HandleFunc("/CourseScheduleDetails/UPDATE/", CSDrecords).Methods("POST")
 		router.HandleFunc("/CourseScheduleDetails/adduser/", CSDadduser).Methods("POST")
-		router.HandleFunc("/CourseScheduleDetails/DELETE/", CSDdeleterow).Methods("POST")
+		router.HandleFunc("/CourseScheduleDetails/DELETE/", CSDdeleterow).Methods("DELETE")
 
 		//Course Details
 		router.HandleFunc("/CourseDetails/GET/", CDrecords).Methods("GET")
 		router.HandleFunc("/CourseDetails/UPDATE/", CDrecords).Methods("POST")
 		router.HandleFunc("/CourseDetails/adduser/", CDadduser).Methods("POST")
-		router.HandleFunc("/CourseDetails/DELETE/", CDdeleterow).Methods("POST")
+		router.HandleFunc("/CourseDetails/DELETE/", CDdeleterow).Methods("DELETE")
 
 		//Assessor Details
 		router.HandleFunc("/AssessorDetails/GET/", Arecords).Methods("GET")
 		router.HandleFunc("/AssessorDetails/UPDATE/", Arecords).Methods("POST")
 		router.HandleFunc("/AssessorDetails/adduser/", Aadduser).Methods("POST")
-		router.HandleFunc("/AssessorDetails/DELETE/", Adeleterow).Methods("POST")
+		router.HandleFunc("/AssessorDetails/DELETE/", Adeleterow).Methods("DELETE")
 
 		log.Fatal(http.ListenAndServe(":3031", router))
 
@@ -100,6 +100,14 @@ func main() {
 
 }
 
+func Ping() string {
+	return "PONG"
+}
+
+func bing(w http.ResponseWriter, _ *http.Request) {
+	_, _ = fmt.Fprint(w, "bong")
+}
+
 /////////////////////////////////////////////////////////////////
 //student Details
 
@@ -120,9 +128,9 @@ func SDrecords(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			terrors(err, "insForm", "records")
 		}
-		_, err = insForm.Exec(SID, SNAME, address, Postcode, email, mobilenumber, CNAME, CID, CSD, Achieved)
+		_, err = insForm.Exec(SNAME, address, Postcode, email, mobilenumber, CNAME, CID, CSD, Achieved, SID)
 		if err != nil {
-			terrors(err, "insForm.Exec :92", "records")
+			terrors(err, "insForm.Exec", "records")
 		}
 
 		err = json.NewEncoder(w).Encode("done")
@@ -140,7 +148,6 @@ func SDrecords(w http.ResponseWriter, r *http.Request) {
 			terrors(err, "rows in records", "records")
 		}
 		jsonFile := jsonify.Jsonify(rows)
-		fmt.Println(jsonFile)
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(jsonFile)
 		if err != nil {
@@ -235,7 +242,7 @@ func VDrecords(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			terrors(err, "insForm", "records")
 		}
-		_, err = insForm.Exec(VNAME, VID, VADDRESS, Postcode, email, number, cost, GML)
+		_, err = insForm.Exec(VNAME, VADDRESS, Postcode, email, number, cost, GML, VID)
 		if err != nil {
 			terrors(err, "insForm.Exec :92", "records")
 		}
@@ -255,7 +262,6 @@ func VDrecords(w http.ResponseWriter, r *http.Request) {
 			terrors(err, "rows in records", "records")
 		}
 		jsonFile := jsonify.Jsonify(rows)
-		fmt.Println(jsonFile)
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(jsonFile)
 		if err != nil {
@@ -452,7 +458,7 @@ func CDrecords(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			terrors(err, "insForm", "records")
 		}
-		_, err = insForm.Exec(CNAME, CID, CSD, duration, cost)
+		_, err = insForm.Exec(CNAME, CSD, duration, cost, CID)
 		if err != nil {
 			terrors(err, "insForm.Exec :92", "records")
 		}
@@ -472,7 +478,6 @@ func CDrecords(w http.ResponseWriter, r *http.Request) {
 			terrors(err, "rows in records", "records")
 		}
 		jsonFile := jsonify.Jsonify(rows)
-		fmt.Println(jsonFile)
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(jsonFile)
 		if err != nil {
@@ -562,7 +567,7 @@ func Arecords(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			terrors(err, "insForm", "records")
 		}
-		_, err = insForm.Exec(ANAME, AID, address, number, Postcode, email, VID)
+		_, err = insForm.Exec(ANAME, address, number, Postcode, email, VID, AID)
 		if err != nil {
 			terrors(err, "insForm.Exec :92", "records")
 		}
@@ -581,7 +586,6 @@ func Arecords(w http.ResponseWriter, r *http.Request) {
 			terrors(err, "rows in records", "records")
 		}
 		jsonFile := jsonify.Jsonify(rows)
-		fmt.Println(jsonFile)
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(jsonFile)
 		if err != nil {
