@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/bdwilliams/go-jsonify/jsonify"
 	"github.com/gorilla/mux"
 	"log"
@@ -45,33 +44,24 @@ func main() {
 	go func() {
 
 		router := mux.NewRouter()
-		router.HandleFunc("/bing", bing).Methods("GET")
 
-		//student Details
 		router.HandleFunc("/students/GET/", SDrecords).Methods("GET")
 		router.HandleFunc("/students/UPDATE/", SDrecords).Methods("POST")
 		router.HandleFunc("/students/adduser/", SDadduser).Methods("POST")
 		router.HandleFunc("/students/DELETE/", SDdeleterow).Methods("DELETE")
-
-		//Venue Details
 		router.HandleFunc("/Venue/GET/", VDrecords).Methods("GET")
 		router.HandleFunc("/Venue/UPDATE/", VDrecords).Methods("POST")
 		router.HandleFunc("/Venue/adduser/", VDadduser).Methods("POST")
 		router.HandleFunc("/Venue/DELETE/", VDdeleterow).Methods("DELETE")
-
-		///Course Schedule Details
 		router.HandleFunc("/CourseScheduleDetails/GET/", CSDrecords).Methods("GET")
 		router.HandleFunc("/CourseScheduleDetails/UPDATE/", CSDrecords).Methods("POST")
 		router.HandleFunc("/CourseScheduleDetails/adduser/", CSDadduser).Methods("POST")
-		router.HandleFunc("/CourseScheduleDetails/DELETE/", CSDdeleterow).Methods("DELETE")
-
-		//Course Details
+		router.HandleFunc("/CourseScheduleDetails/DELETE/", CSDdeleterow).Methods("POST")
 		router.HandleFunc("/CourseDetails/GET/", CDrecords).Methods("GET")
 		router.HandleFunc("/CourseDetails/UPDATE/", CDrecords).Methods("POST")
 		router.HandleFunc("/CourseDetails/adduser/", CDadduser).Methods("POST")
 		router.HandleFunc("/CourseDetails/DELETE/", CDdeleterow).Methods("DELETE")
 
-		//Assessor Details
 		router.HandleFunc("/AssessorDetails/GET/", Arecords).Methods("GET")
 		router.HandleFunc("/AssessorDetails/UPDATE/", Arecords).Methods("POST")
 		router.HandleFunc("/AssessorDetails/adduser/", Aadduser).Methods("POST")
@@ -102,10 +92,6 @@ func main() {
 
 func Ping() string {
 	return "PONG"
-}
-
-func bing(w http.ResponseWriter, _ *http.Request) {
-	_, _ = fmt.Fprint(w, "bong")
 }
 
 /////////////////////////////////////////////////////////////////
@@ -142,7 +128,6 @@ func SDrecords(w http.ResponseWriter, r *http.Request) {
 
 		q := "SELECT * FROM Student_Details WHERE SID = ?"
 		SID := r.FormValue("SID")
-		print(" GET, SID:" + SID)
 		rows, err := db.Query(q, SID)
 		if err != nil {
 			terrors(err, "rows in records", "records")
@@ -229,6 +214,7 @@ func SDadduser(w http.ResponseWriter, r *http.Request) {
 
 func VDrecords(w http.ResponseWriter, r *http.Request) {
 	db := dbConn()
+
 	if r.Method == "POST" {
 		VNAME := r.FormValue("VNAME")
 		VID := r.FormValue("VID")
@@ -253,17 +239,15 @@ func VDrecords(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if r.Method == "GET" {
-
-		q := "SELECT * FROM Venue_Details WHERE VID = ?"
 		VID := r.FormValue("VID")
-		print(" GET, VID:" + VID)
+		q := "SELECT * FROM Venue_Details WHERE VID = ?"
 		rows, err := db.Query(q, VID)
 		if err != nil {
 			terrors(err, "rows in records", "records")
 		}
-		jsonFile := jsonify.Jsonify(rows)
+
 		w.Header().Set("Content-Type", "application/json")
-		err = json.NewEncoder(w).Encode(jsonFile)
+		err = json.NewEncoder(w).Encode(rows)
 		if err != nil {
 			terrors(err, "json.NewEncoder(w).Encode(done) :115", "records")
 		}
@@ -331,7 +315,6 @@ func VDadduser(w http.ResponseWriter, r *http.Request) {
 			terrors(err, "defer func ", "adduser")
 		}
 	}(db)
-
 	err = json.NewEncoder(w).Encode("done")
 	if err != nil {
 		terrors(err, "defer func ", "adduser")
@@ -353,7 +336,7 @@ func CSDrecords(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			terrors(err, "insForm", "records")
 		}
-		_, err = insForm.Exec(CNAME, CID, CSD, duration, cost)
+		_, err = insForm.Exec(CNAME, CSD, duration, cost, CID)
 		if err != nil {
 			terrors(err, "insForm.Exec :92", "records")
 		}
@@ -364,16 +347,14 @@ func CSDrecords(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if r.Method == "GET" {
-
-		q := "SELECT * FROM Course_Schedule_Details WHERE CID = ?"
 		CID := r.FormValue("CID")
+		q := "SELECT * FROM Course_Schedule_Details WHERE CID = ?"
 		print(" GET, CID:" + CID)
 		rows, err := db.Query(q, CID)
 		if err != nil {
 			terrors(err, "rows in records", "records")
 		}
 		jsonFile := jsonify.Jsonify(rows)
-		fmt.Println(jsonFile)
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(jsonFile)
 		if err != nil {
@@ -416,20 +397,16 @@ func CSDdeleterow(w http.ResponseWriter, r *http.Request) {
 
 func CSDadduser(w http.ResponseWriter, r *http.Request) {
 	db := dbConn()
-
-	CNAME := r.FormValue("CNAME")
 	CID := r.FormValue("CID")
+	CNAME := r.FormValue("CNAME")
 	CSD := r.FormValue("CSD")
 	duration := r.FormValue("duration")
 	cost := r.FormValue("cost")
-	insForm, err := db.Prepare("INSERT INTO Course_Schedule_Details ( CNAME, CID, CSD, duration, cost) VALUES(?,?,?,?,?)")
+	insForm, err := db.Prepare("INSERT INTO Course_Schedule_Details (CID, CNAME, CSD, duration, cost) VALUES(?,?,?,?,?)")
 	if err != nil {
 		terrors(err, "insForm, err := db.Prepare", "adduser")
 	}
-	_, err = insForm.Exec(CNAME, CID, CSD, duration, cost)
-	if err != nil {
-		terrors(err, "_, err = insForm.Exec", "adduser")
-	}
+	_, err = insForm.Exec(CID, CNAME, CSD, duration, cost)
 
 	defer func(db *sql.DB) {
 		err := db.Close()
@@ -454,7 +431,7 @@ func CDrecords(w http.ResponseWriter, r *http.Request) {
 		CSD := r.FormValue("CSD")
 		duration := r.FormValue("duration")
 		cost := r.FormValue("cost")
-		insForm, err := db.Prepare("UPDATE Course_Schedule_Details SET CNAME=?, CSD=?, duration=?, cost=? WHERE  CID=?")
+		insForm, err := db.Prepare("UPDATE Course_Details SET CNAME=?, CSD=?, duration=?, cost=? WHERE  CID=?")
 		if err != nil {
 			terrors(err, "insForm", "records")
 		}
@@ -469,10 +446,8 @@ func CDrecords(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if r.Method == "GET" {
-
-		q := "SELECT * FROM Course_Details WHERE CID = ?"
 		CID := r.FormValue("CID")
-		print(" GET, CID:" + CID)
+		q := "SELECT * FROM Course_Details WHERE CID = ?"
 		rows, err := db.Query(q, CID)
 		if err != nil {
 			terrors(err, "rows in records", "records")
@@ -556,7 +531,7 @@ func CDadduser(w http.ResponseWriter, r *http.Request) {
 func Arecords(w http.ResponseWriter, r *http.Request) {
 	db := dbConn()
 	if r.Method == "POST" {
-		ANAME := r.FormValue("name")
+		ANAME := r.FormValue("ANAME")
 		AID := r.FormValue("AID")
 		address := r.FormValue("address")
 		Postcode := r.FormValue("Postcode")
@@ -578,9 +553,8 @@ func Arecords(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if r.Method == "GET" {
-		AID := r.FormValue("VID")
+		AID := r.FormValue("AID")
 		q := "SELECT * FROM Assessor_Details WHERE AID=? "
-		print(" GET, AID:" + AID)
 		rows, err := db.Query(q, AID)
 		if err != nil {
 			terrors(err, "rows in records", "records")
@@ -631,7 +605,7 @@ func Adeleterow(w http.ResponseWriter, r *http.Request) {
 func Aadduser(w http.ResponseWriter, r *http.Request) {
 	db := dbConn()
 
-	ANAME := r.FormValue("name")
+	ANAME := r.FormValue("ANAME")
 	AID := r.FormValue("AID")
 	address := r.FormValue("address")
 	Postcode := r.FormValue("Postcode")
@@ -643,9 +617,6 @@ func Aadduser(w http.ResponseWriter, r *http.Request) {
 		terrors(err, "insForm, err := db.Prepare", "adduser")
 	}
 	_, err = insForm.Exec(ANAME, AID, address, number, Postcode, email, VID)
-	if err != nil {
-		terrors(err, "_, err = insForm.Exec", "adduser")
-	}
 
 	defer func(db *sql.DB) {
 		err := db.Close()
